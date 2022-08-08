@@ -50,17 +50,14 @@ class MyTiny:
 
     def _new_rev_document(self, NumDoc: str, Rev: dict) -> str:
         """
-        Actualiza la revision del documento, agregando una nueva a la lista
-        de revs, tambien pasa a "SUPERADO" la revision anterior.
+        Pasa al estado de la revision anterior a 'SUPERADO', y agrega la nueva
+        revision al final de la lista.
         """
         def _transform_document(Rev):
             def transform(doc):
-                def _superate(n):
-                    n['Status'] = 'SUPERADO'
-                    return n
-                #print(list(map(_superate, doc['Revs'])))
-                print(list(map(lambda i: i.update(Status='SUPERADO'),doc['Revs'])))
-               # add(doc['Revs'],Rev)
+                doc['Revs'][-1]['Status'] = 'SUPERADO'
+                doc['Revs'].append(Rev)
+                print(doc)
             return transform
 
         self.docs.update(_transform_document(Rev),Doc.NumDoc == NumDoc)
