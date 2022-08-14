@@ -62,6 +62,10 @@ Interactuando con la base de datos en SQLAlchemy.
 - Flask-SQLAlchemy
 - Python +3.8 
 
+### Estructura del proyecto
+
+![Estructura](assets/structure.jpg)
+
 ## Desarrollo y Etapas
 
 Para el desarrollo de la plataforma, se utilizara la metodologia agil, y asi obtener un producto terminado bajo posibles mejoras y caracteristicas que se puedan agregar en el proceso de la construccion.
