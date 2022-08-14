@@ -50,15 +50,16 @@ Este panel tiene acceso cualquier personal de la red, donde se realizan las sigu
 
 La arquitectura de la aplicacion se estructura de la siguiente forma:
 
-![Arquitectura](assets/arcth.png)
+![Arquitectura](assets/arquitectura.jpg)
 
-Por un lado tenemos los clientes, que ejecutan la *kivy_app.exe* que se almacena en el Server Local, donde tambien se aloja una base de datos en formato **JSON**, que consume la kivy_app. Tanto sea para el panel de carga como el de consulta.
+La aplicacion se ejecuta desde el servidor, levantando un servidor web local.
+Interactuando con la base de datos en SQLAlchemy.
 
 ### Dependencias
 
-- KivyMD == 0.104.2
-- Kivy >= 2.0.0 (Installation)
-- TinyDB == 4.7.0
+- Flask
+- Bulma
+- Flask-SQLAlchemy
 - Python +3.8 
 
 ## Desarrollo y Etapas
@@ -76,7 +77,7 @@ Las etapas para cada uno de los paneles son los siguientes:
 1. Estructura de datos
 2. Blueprint Service
 3. Wireframing
-4. Modelado en kv language
+4. Modelado html
 5. Despliegue
 
 ## Roadmap
