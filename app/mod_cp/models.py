@@ -1,5 +1,10 @@
 from app import db
 
+"""
+##############################################################
+######## Modelos de Datos para el Panel de Carga (CP) ########
+##############################################################
+"""
 class Document(db.model):
     '''
     Representa un Documento del Proyecto Carem25 en la Base de Datos
