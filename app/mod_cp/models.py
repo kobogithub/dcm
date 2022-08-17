@@ -5,7 +5,7 @@ from app import db
 ######## Modelos de Datos para el Panel de Carga (CP) ########
 ##############################################################
 """
-class Document(db.model):
+class Document(db.Model):
     '''
     Representa un Documento del Proyecto Carem25 en la Base de Datos
     Existen dos tipos de documentos, los emitidos por CNEA y por la UG NA-SA.
@@ -31,7 +31,7 @@ class Document(db.model):
         return f'Document {self.docnum}'
 
 
-class Rev(db.model):
+class Rev(db.Model):
     '''
     Se almacena las revisiones del documento, la APROBADA LIBERADA como las SUPERADAS \n
     Tambien poseen una tabla de diferencias con los documentos emitidos por CNEA y UG.
@@ -54,7 +54,7 @@ class Rev(db.model):
     sheets = db.relationship('Sheet',backref='owned_rev', lazy=True)
     owner = db.Column(db.Integer(),db.ForeingKey('document.id'))
 
-class Sheet(db.model):
+class Sheet(db.Model):
     '''
     Cuando se genera un master, puede afectarse la/s hoja/s de un documento *CNEA*.\n
     \n
@@ -75,7 +75,7 @@ class Sheet(db.model):
     owner = db.Column(db.Integer(),db.ForeingKey('rev.id'))
 
 
-class Ric(db.model):
+class Ric(db.Model):
     '''
     Las Revisiones Internas de Cambios o Master son generadas por documentos de cambio.\n
     \n
@@ -93,7 +93,7 @@ class Ric(db.model):
     notelist = db.Column(db.String(255), nullable=False, unique=True)
     owner = db.Column(db.Integer(),db.ForeingKey('sheet.id'))
 
-class Note(db.model):
+class Note(db.Model):
     '''
     Detalle de la nota que afecta el documento, se categorizan en tres tipos \n
     de documentos Notificacion de Cambio en Obra (NCO), Aclaracion Tecnica(AT) y\n
