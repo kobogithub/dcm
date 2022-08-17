@@ -75,11 +75,14 @@ Se construye el entorno a traves de la libreria pipenv, para poder instalarla se
 `
 pip install pipenv
 `
+
 Una vez configurado pipenv, se procede a instalar las Dependencias del proyecto.
 `
 pipenv install
 `
+
 La configuración de flask se puede editar en el archivo 'Pipfile', y iniciar el servidor de la siguiente manera:
+
 `
 pipenv run flask run
 `
