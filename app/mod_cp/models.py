@@ -8,9 +8,10 @@ from datetime import datetime as dt
 """
 class Document(db.Model):
     '''
-    Representa un Documento del Proyecto Carem25 en la Base de Datos
-    Existen dos tipos de documentos, los emitidos por CNEA y por la UG NA-SA.
-    Dependiendo del campo se detalla la siguiente tabla de datos
+    Representa un Documento del Proyecto Carem25 en la Base de Datos \n
+    Existen dos tipos de documentos, los emitidos por CNEA y por la UG NA-SA. \n
+    Dependiendo del campo se detalla la siguiente tabla de datos\n
+    \n
     |   Name    |   CNEA    |   UG  |   Type    |   Description                              |
     | --------- | --------- | ----- | --------- | ------------------------------------------ |
     | docnum    |     X     |   X   |  String   | Codigo del plano                           |
@@ -36,7 +37,8 @@ class Document(db.Model):
 class Rev(db.Model):
     '''
     Se almacena las revisiones del documento, la APROBADA LIBERADA como las SUPERADAS \n
-    Tambien poseen una tabla de diferencias con los documentos emitidos por CNEA y UG.
+    Tambien poseen una tabla de diferencias con los documentos emitidos por CNEA y UG.\n
+    \n
     |   Name      |   CNEA    |   UG  |   Type    |   Description                              |
     | ----------- | --------- | ----- | --------- | ------------------------------------------ |
     | rev         |     X     |   X   |  Integer  | Numero de Revision                         |
