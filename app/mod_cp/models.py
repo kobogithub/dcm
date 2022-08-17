@@ -1,3 +1,4 @@
+from email.policy import default
 from app import db
 from datetime import datetime as dt
 
@@ -24,14 +25,22 @@ class Document(db.Model):
     __tablename__ = 'document'
     id = db.Column(db.Integer, primary_key=True)
     docnum = db.Column(db.String(255), nullable=False, unique=True)
-    doccnea = db.Column(db.String(255), nullable=False)
-    docqbnet = db.Column(db.String(255), nullable=False)
+    doccnea = db.Column(db.String(255),nullable=True)
+    docqbnet = db.Column(db.String(255),nullable=True)
     title = db.Column(db.String(255), nullable=False, unique=True)
     section = db.Column(db.String(255), nullable=False, unique=True)
     revs = db.relationship('Rev',backref='document', lazy=True)
     
     def __repr__(self) -> str:
         return f'Document {self.docnum}'
+    
+    def __save__(self):
+        '''
+        Guardda el documento en la Base de Datos
+        '''
+        db.session.add(self)
+        db.session.commit()
+    
 
 
 class Rev(db.Model):
@@ -56,7 +65,7 @@ class Rev(db.Model):
     os = db.Column(db.Integer, nullable=False, unique=True)
     status = db.Column(db.String(255), nullable=False, unique=True)
     totalsheets = db.Column(db.Integer, nullable=False, unique=True)
-    sheets = db.relationship('Sheet',backref='owned_rev', lazy=True)
+    sheets = db.relationship('Sheet',backref='rev', lazy=True)
     owner = db.Column(db.Integer,db.ForeignKey('document.id'))
 
 class Sheet(db.Model):
@@ -77,7 +86,7 @@ class Sheet(db.Model):
     sheetnum = db.Column(db.Integer, nullable=False, unique=True)
     format = db.Column(db.String(255), nullable=False)
     ric = db.relationship('Ric',backref='owned_sheet', lazy=True)
-    notes = db.relationship('Note',backref='owned_sheet', lazy=True)
+    notes = db.relationship('Note',backref='sheet', lazy=True)
     owner = db.Column(db.Integer,db.ForeignKey('rev.id'))
 
 
