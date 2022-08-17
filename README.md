@@ -66,24 +66,20 @@ Interactuando con la base de datos en SQLAlchemy.
 
 ![Estructura](assets/structure.jpg)
 
-## Desarrollo y Etapas
+## Despliegue de la aplicacion
 
-Para el desarrollo de la plataforma, se utilizara la metodologia agil, y asi obtener un producto terminado bajo posibles mejoras y caracteristicas que se puedan agregar en el proceso de la construccion.
+# Pipenv
 
-Se procede a realizar dos milestone:
-- Panel de Carga
-- Panel de Consulta
+Se construye el entorno a traves de la libreria pipenv, para poder instalarla se utiliza el siguiente comando:
 
-Realizando un sprint en cada uno de los milestone, con una duracion de una semana. El siguimiento se realizara a traves de Github Projects.
-
-Las etapas para cada uno de los paneles son los siguientes:
-
-1. Estructura de datos
-2. Blueprint Service
-3. Wireframing
-4. Modelado html
-5. Despliegue
-
-## Roadmap
-
-Disponible en los milestone de Github
+`
+pip install pipenv
+`
+Una vez configurado pipenv, se procede a instalar las Dependencias del proyecto.
+`
+pipenv install
+`
+La configuración de flask se puede editar en el archivo 'Pipfile', y iniciar el servidor de la siguiente manera:
+`
+pipenv run flask run
+`
