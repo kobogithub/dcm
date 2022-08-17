@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime as dt
 
 """
 ##############################################################
@@ -19,13 +20,14 @@ class Document(db.Model):
     | section   |     X     |   X   |  String   | Seccion de la carpeta                      |
     | revs      |     X     |   X   |  Table    | Tabla de revisiones del documento          |
     '''
-    id = db.Column(db.Integer(), primary_key=True)
+    __tablename__ = 'document'
+    id = db.Column(db.Integer, primary_key=True)
     docnum = db.Column(db.String(255), nullable=False, unique=True)
     doccnea = db.Column(db.String(255), nullable=False)
     docqbnet = db.Column(db.String(255), nullable=False)
     title = db.Column(db.String(255), nullable=False, unique=True)
     section = db.Column(db.String(255), nullable=False, unique=True)
-    revs = db.relationship('Rev',backref='owned_document', lazy=True)
+    revs = db.relationship('Rev',backref='document', lazy=True)
     
     def __repr__(self) -> str:
         return f'Document {self.docnum}'
@@ -45,14 +47,15 @@ class Rev(db.Model):
     | sheets      |     X     |   X   |  Table    | Tabla de hojas del documento               |
     | owner       |     X     |   X   |  Key      | Clave vinculada a la tabla de documento    |
     '''
-    id = db.Column(db.Integer(), primary_key=True)
-    rev = db.Column(db.Integer(),nullable=False, unique=True)
-    date = db.Column(db.String(255), nullable=False, unique=True)
-    os = db.Column(db.Integer(), nullable=False, unique=True)
+    __tablename__ = 'rev'
+    id = db.Column(db.Integer, primary_key=True)
+    rev = db.Column(db.Integer,nullable=False, unique=True)
+    date = db.Column(db.DateTime, nullable=False, unique=True,default=dt.utcnow())
+    os = db.Column(db.Integer, nullable=False, unique=True)
     status = db.Column(db.String(255), nullable=False, unique=True)
-    totalsheets = db.Column(db.Integer(), nullable=False, unique=True)
+    totalsheets = db.Column(db.Integer, nullable=False, unique=True)
     sheets = db.relationship('Sheet',backref='owned_rev', lazy=True)
-    owner = db.Column(db.Integer(),db.ForeingKey('document.id'))
+    owner = db.Column(db.Integer,db.ForeignKey('document.id'))
 
 class Sheet(db.Model):
     '''
@@ -67,12 +70,13 @@ class Sheet(db.Model):
     | owner       |  Key      | Clave vinculada a la tabla de revisiones   |
  
     '''
-    id = db.Column(db.Integer(), primary_key=True)
-    sheetnum = db.Column(db.Integer(), nullable=False, unique=True)
+    __tablename__ = 'sheet'
+    id = db.Column(db.Integer, primary_key=True)
+    sheetnum = db.Column(db.Integer, nullable=False, unique=True)
     format = db.Column(db.String(255), nullable=False)
     ric = db.relationship('Ric',backref='owned_sheet', lazy=True)
     notes = db.relationship('Note',backref='owned_sheet', lazy=True)
-    owner = db.Column(db.Integer(),db.ForeingKey('rev.id'))
+    owner = db.Column(db.Integer,db.ForeignKey('rev.id'))
 
 
 class Ric(db.Model):
@@ -87,11 +91,12 @@ class Ric(db.Model):
     | owner       |  Key      | Clave vinculada a la tabla de sheets       |
  
     '''
-    id = db.Column(db.Integer(), primary_key=True)
+    __tablename__ = 'ric'
+    id = db.Column(db.Integer, primary_key=True)
     rev = db.Column(db.String(255), nullable=False, unique=True)
-    date = db.Column(db.String(255), nullable=False, unique=True)
+    date = db.Column(db.DateTime, nullable=False, unique=True,default=dt.utcnow)
     notelist = db.Column(db.String(255), nullable=False, unique=True)
-    owner = db.Column(db.Integer(),db.ForeingKey('sheet.id'))
+    owner = db.Column(db.Integer,db.ForeignKey('sheet.id'))
 
 class Note(db.Model):
     '''
@@ -109,10 +114,11 @@ class Note(db.Model):
     | owner       |   X   |   X   |   X   |  Key      | Clave vinculada a la tabla de sheets       |
 
     '''
-    id = db.Column(db.Integer(), primary_key=True)
-    notenum = db.Column(db.Integer(), nullable=False, unique=True)
+    __tablename__ = 'note'
+    id = db.Column(db.Integer, primary_key=True)
+    notenum = db.Column(db.Integer, nullable=False, unique=True)
     docnum = db.Column(db.String(255), nullable=False, unique=True)
-    rev = db.Column(db.Integer(), nullable=False, unique=True)
+    rev = db.Column(db.Integer, nullable=False, unique=True)
     verify = db.Column(db.String(255), nullable=False, unique=True)
     status = db.Column(db.String(255), nullable=False, unique=True)
-    owner = db.Column(db.Integer(),db.ForeingKey('sheet.id'))
+    owner = db.Column(db.Integer,db.ForeignKey('sheet.id'))
