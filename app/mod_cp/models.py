@@ -1,4 +1,3 @@
-from email.policy import default
 from app import db
 from datetime import datetime as dt
 
@@ -32,14 +31,18 @@ class Document(db.Model):
     revs = db.relationship('Rev',backref='document', lazy=True)
     
     def __repr__(self) -> str:
+        '''
+            Representacion del documento por shell
+        '''
         return f'Document {self.docnum}'
     
-    def __save__(self):
+    def __save__(self) -> int:
         '''
         Guardda el documento en la Base de Datos
         '''
         db.session.add(self)
         db.session.commit()
+        return self.id
     
 
 
@@ -68,6 +71,12 @@ class Rev(db.Model):
     sheets = db.relationship('Sheet',backref='rev', lazy=True)
     owner = db.Column(db.Integer,db.ForeignKey('document.id'))
 
+    def __repr__(self) -> str:
+        '''
+            Representacion de la revision por shell
+        '''
+        return f'Revision {self.rev}'
+ 
 class Sheet(db.Model):
     '''
     Cuando se genera un master, puede afectarse la/s hoja/s de un documento *CNEA*.\n
@@ -88,6 +97,13 @@ class Sheet(db.Model):
     ric = db.relationship('Ric',backref='owned_sheet', lazy=True)
     notes = db.relationship('Note',backref='sheet', lazy=True)
     owner = db.Column(db.Integer,db.ForeignKey('rev.id'))
+
+    def __repr__(self) -> str:
+        '''
+            Representacion del numero de hoja por shell
+        '''
+        return f'Numero de Hoja {self.rev}'
+ 
 
 
 class Ric(db.Model):
