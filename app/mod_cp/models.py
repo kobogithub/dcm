@@ -23,7 +23,7 @@ class Document(db.Model):
     '''
     __tablename__ = 'document'
     id = db.Column(db.Integer, primary_key=True)
-    docnum = db.Column(db.String(255), nullable=False, unique=True)
+    docnum = db.Column(db.String(10), nullable=False, unique=True)
     doccnea = db.Column(db.String(255),nullable=True)
     docqbnet = db.Column(db.String(255),nullable=True)
     title = db.Column(db.String(255), nullable=False, unique=True)
@@ -36,7 +36,7 @@ class Document(db.Model):
         '''
         return f'Document {self.docnum}'
     
-    def __save__(self) -> int:
+    def save_document(self) -> int:
         '''
         Guardda el documento en la Base de Datos
         '''
@@ -125,6 +125,12 @@ class Ric(db.Model):
     notelist = db.Column(db.String(255), nullable=False, unique=True)
     owner = db.Column(db.Integer,db.ForeignKey('sheet.id'))
 
+    def __repr__(self) -> str:
+        '''
+            Representacion la revision por shell
+        '''
+        return f'Revision {self.rev}'
+ 
 class Note(db.Model):
     '''
     Detalle de la nota que afecta el documento, se categorizan en tres tipos \n
@@ -149,3 +155,10 @@ class Note(db.Model):
     verify = db.Column(db.String(255), nullable=False, unique=True)
     status = db.Column(db.String(255), nullable=False, unique=True)
     owner = db.Column(db.Integer,db.ForeignKey('sheet.id'))
+
+    def __repr__(self) -> str:
+        '''
+            Representacion del numero de nota por shell
+        '''
+        return f'Numero de Nota {self.notenum}'
+ 

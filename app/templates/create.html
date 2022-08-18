@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>Create Form</title>
+  </head>
+  <body>
+    {% block body %}
+      <form method="post" action="">
+        {% for field in form %}
+          <div class="input">{{ field.label }} {{ field }}</div>
+        {% endfor %}
+        <p><button type="submit">Submit</button></p>
+      </form>
+    {% endblock %}
+  </body>
+</html>
