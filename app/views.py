@@ -6,7 +6,10 @@ from flask import request,render_template
 
 @app.route("/", methods=["GET", "POST"])
 def create_document():
-    form = DocumentForm(request.form)
-    if request.method == 'POST' or form.validate():
+    form = DocumentForm()
+
+    if form.validate_on_submit():
+        docnum = form.docnum
+        print(docnum)
         return 'success'
     return render_template("home.html",form=form)

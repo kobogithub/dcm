@@ -3,7 +3,7 @@
 {% block body %}
 
 <form method="POST" action="/">
-    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
     <div class="field">
                 {% if form.docnum.errors %}
                     {{ form.docnum(class="input is-medium is-danger") }}
@@ -16,7 +16,7 @@
                     {{ form.docnum(class="input is-medium") }}
                 {% endif %}
             <div class="field mt-5">
-                {{ form.submit(class="button is-fullwidth is-info") }}
+                {{ form.submit(class="button")}}
             </div>
     </div>
 </form>
