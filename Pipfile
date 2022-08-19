@@ -7,8 +7,14 @@ name = "pypi"
 flask-sqlalchemy = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 fastapi = "*"
+sqlalchemy = "*"
+python-multipart = "*"
+pydantic = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+dev = "uvicorn run:app --reload"

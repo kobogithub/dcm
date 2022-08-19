@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d41c3817e05b59341aea0b88b8c0078c1a0535ad89722e70a372695d2d5e8abc"
+            "sha256": "2893b0814cc3e84843b236a5732f670692f099486f4187a33f145ea3898e0d6d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -288,7 +288,7 @@
                 "sha256:fafe841be1103f340a24977f61dee76172e4ae5f647ab9e7fd1e1fca51524f08",
                 "sha256:ff68fc85355532ea77559ede81f35fff79a6a5543477e168ab3a381887caea76"
             ],
-            "markers": "python_full_version >= '3.6.1'",
+            "index": "pypi",
             "version": "==1.9.2"
         },
         "python-dotenv": {
@@ -297,6 +297,13 @@
                 "sha256:d92a187be61fe482e4fd675b6d52200e7be63a12b724abbf931a40ce4fa92938"
             ],
             "version": "==0.20.0"
+        },
+        "python-multipart": {
+            "hashes": [
+                "sha256:f7bb5f611fc600d15fa47b3974c8aa16e93724513b49b5f95c81e6624c83fa43"
+            ],
+            "index": "pypi",
+            "version": "==0.0.5"
         },
         "pyyaml": {
             "hashes": [
@@ -335,6 +342,14 @@
                 "sha256:f84fbc98b019fef2ee9a1cb3ce93e3187a6df0b2538a651bfb890254ba9f90b5"
             ],
             "version": "==6.0"
+        },
+        "six": {
+            "hashes": [
+                "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
+                "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==1.16.0"
         },
         "sniffio": {
             "hashes": [
@@ -383,7 +398,7 @@
                 "sha256:fa9e0d7832b7511b3b3fd0e67fac85ff11fd752834c143ca2364c9b778c0485a",
                 "sha256:fb4edb6c354eac0fcc07cb91797e142f702532dbb16c1d62839d6eec35f814cf"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'",
+            "index": "pypi",
             "version": "==1.4.40"
         },
         "starlette": {
