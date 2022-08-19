@@ -5,22 +5,20 @@
 <form method="POST" action="/">
     {{ form.csrf_token }}
     <div class="field">
-        <label class="label">Label</label>
-        <div class="control">
-            <input class="input" type="text" placeholder="{{ form.title.label.text }}">
-        </div>
-        <p class="help">This is a help text</p>
-    </div>
-    <div class="control">
-        <button class="button" type="submit">Button</button>
+                {% if form.docnum.errors %}
+                    {{ form.docnum(class="input is-medium is-danger") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.docnum.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.docnum(class="input is-medium") }}
+                {% endif %}
+            <div class="field mt-5">
+                {{ form.submit(class="button is-fullwidth is-info") }}
+            </div>
     </div>
 </form>
-<div class="notification">
-  <button class="delete"></button>
-  Lorem ipsum dolor sit amet, consectetur
-  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
-</div>
-
-
 
 {% endblock %}
