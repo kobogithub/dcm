@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask-sqlalchemy = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 fastapi = "*"
 sqlalchemy = "*"
