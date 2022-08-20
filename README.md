@@ -84,6 +84,12 @@ El siguiente comando esta establecido en script de Pipfile:
 
 Server : [LocaHost:8000](http://localhost:8000)
 
+### Documentacion
+
+La documentacion esta bajo del estandar OpenAPI([Swagger](https://swagger.io/)), se puede ingresar de la siguiente manera.
+
+[Localhost:8000/docs](http://localhost:8000/docs)
+
 ## Desarrollo y Etapas
 
 Para el desarrollo de la plataforma, se utilizara la metodologia agil, y asi obtener un producto terminado bajo posibles mejoras y caracteristicas que se puedan agregar en el proceso de la construccion.
