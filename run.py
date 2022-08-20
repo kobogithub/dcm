@@ -1,13 +1,13 @@
-
+import uvicorn
 """
 DCM app server
 Document control manager
 """
 
-from app import app 
+from app.main import app 
 
 ######################################################################
 #   M A I N
 ######################################################################
 if __name__ == "__main__":
-    app.run()
+    uvicorn.run(app)

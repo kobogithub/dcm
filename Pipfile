@@ -9,6 +9,7 @@ fastapi = "*"
 sqlalchemy = "*"
 python-multipart = "*"
 pydantic = "*"
+jinja2 = "*"
 
 [dev-packages]
 
