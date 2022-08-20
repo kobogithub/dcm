@@ -26,10 +26,10 @@ class Document(Base):
     docnum = Column(String(255), nullable=False, unique=True, index=True)
     doccnea = Column(String(255), nullable=False)
     docqbnet = Column(String(255), nullable=False)
-    title = Column(String(255), nullable=False, unique=True)
-    section = Column(String(255), nullable=False, unique=True)
+    title = Column(String(255), nullable=False)
+    section = Column(String(255), nullable=False)
 
-    revs = relationship('Rev',back_populates='owner_document')
+   # revs = relationship('Rev',back_populates='owner_document')
     
 class Rev(Base):
     '''
@@ -54,9 +54,9 @@ class Rev(Base):
     status = Column(String(255), nullable=False, unique=True)
     totalsheets = Column(Integer, nullable=False, unique=True)
 
-    sheets = relationship('Sheet',back_populates='owner_rev')
+    #sheets = relationship('Sheet',back_populates='owner_rev')
 
-    owner_document = Column(Integer,ForeignKey('documents.id'))
+    #owner_document = Column(Integer,ForeignKey('documents.id'))
 
 class Sheet(Base):
     '''
@@ -77,11 +77,11 @@ class Sheet(Base):
     sheetnum = Column(Integer, nullable=False, unique=True)
     format = Column(String(255), nullable=False)
 
-    rics = relationship('Ric',back_populates='owned_sheet', lazy=True)
+    #rics = relationship('Ric',back_populates='owned_sheet', lazy=True)
 
-    notes = relationship('Note',back_populates='owner_sheet', lazy=True)
+    #notes = relationship('Note',back_populates='owner_sheet', lazy=True)
 
-    owner_rev = Column(Integer(),ForeignKey('revs.id'))
+    #owner_rev = Column(Integer(),ForeignKey('revs.id'))
 
 
 class Ric(Base):
@@ -103,7 +103,7 @@ class Ric(Base):
     date = Column(String(255), nullable=False, unique=True)
     notelist = Column(String(255), nullable=False, unique=True)
 
-    owner_sheet = Column(Integer,ForeignKey('sheets.id'))
+    #owner_sheet = Column(Integer,ForeignKey('sheets.id'))
 
 class Note(Base):
     '''
@@ -130,5 +130,5 @@ class Note(Base):
     verify = Column(String(255), nullable=False, unique=True)
     status = Column(String(255), nullable=False, unique=True)
 
-    owner_sheet = Column(Integer,ForeignKey('sheets.id'))
+    #owner_sheet = Column(Integer,ForeignKey('sheets.id'))
 

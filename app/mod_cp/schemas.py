@@ -31,8 +31,8 @@ class SheetBase(BaseModel):
     id: int
     sheetnum: int
     format: str
-    rics: list[Ric] = []
-    notes: list[Note] = []
+    #rics: list[Ric] = []
+    #notes: list[Note] = []
 
 class Sheet(SheetBase):
     id: int
@@ -46,7 +46,7 @@ class RevBase(BaseModel):
     os: int
     status: str
     totalsheets: int
-    sheets: list[Sheet] = []
+    #sheets: list[Sheet] = []
 
 class Rev(RevBase):
     id: int
@@ -61,9 +61,10 @@ class DocumentBase(BaseModel):
     docqbnet: Optional[str]
     title: str
     section: str
-    revs: list[Rev] = []
+    #revs: list[Rev] = []
 
-
+class CreateDocument(DocumentBase):
+    pass
 class Document(DocumentBase):
     id: int
 
