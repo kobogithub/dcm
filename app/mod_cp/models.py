@@ -1,12 +1,14 @@
-from app import db
-
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
+from app.db.database import Base
 """
 ##############################################################
 ######## Modelos de Datos para el Panel de Carga (CP) ########
 ##############################################################
 """
-class Document(db.model):
+class Document(Base):
     '''
+    ## Tabla de Documentos
     Representa un Documento del Proyecto Carem25 en la Base de Datos
     Existen dos tipos de documentos, los emitidos por CNEA y por la UG NA-SA.
     Dependiendo del campo se detalla la siguiente tabla de datos
@@ -19,20 +21,19 @@ class Document(db.model):
     | section   |     X     |   X   |  String   | Seccion de la carpeta                      |
     | revs      |     X     |   X   |  Table    | Tabla de revisiones del documento          |
     '''
-    id = db.Column(db.Integer(), primary_key=True)
-    docnum = db.Column(db.String(255), nullable=False, unique=True)
-    doccnea = db.Column(db.String(255), nullable=False)
-    docqbnet = db.Column(db.String(255), nullable=False)
-    title = db.Column(db.String(255), nullable=False, unique=True)
-    section = db.Column(db.String(255), nullable=False, unique=True)
-    revs = db.relationship('Rev',backref='owned_document', lazy=True)
+    __tablename__ = "documents"
+    id = Column(Integer, primary_key=True,index=True)
+    docnum = Column(String(255), nullable=False, unique=True, index=True)
+    doccnea = Column(String(255), nullable=False)
+    docqbnet = Column(String(255), nullable=False)
+    title = Column(String(255), nullable=False)
+    section = Column(String(255), nullable=False)
+
+    revs = relationship('Rev',back_populates='owner')
     
-    def __repr__(self) -> str:
-        return f'Document {self.docnum}'
-
-
-class Rev(db.model):
+class Rev(Base):
     '''
+    ## Tabla de Revisiones
     Se almacena las revisiones del documento, la APROBADA LIBERADA como las SUPERADAS \n
     Tambien poseen una tabla de diferencias con los documentos emitidos por CNEA y UG.
     |   Name      |   CNEA    |   UG  |   Type    |   Description                              |
@@ -45,17 +46,23 @@ class Rev(db.model):
     | sheets      |     X     |   X   |  Table    | Tabla de hojas del documento               |
     | owner       |     X     |   X   |  Key      | Clave vinculada a la tabla de documento    |
     '''
-    id = db.Column(db.Integer(), primary_key=True)
-    rev = db.Column(db.Integer(),nullable=False, unique=True)
-    date = db.Column(db.String(255), nullable=False, unique=True)
-    os = db.Column(db.Integer(), nullable=False, unique=True)
-    status = db.Column(db.String(255), nullable=False, unique=True)
-    totalsheets = db.Column(db.Integer(), nullable=False, unique=True)
-    sheets = db.relationship('Sheet',backref='owned_rev', lazy=True)
-    owner = db.Column(db.Integer(),db.ForeingKey('document.id'))
+    __tablename__ = "revs"
+    id = Column(Integer, primary_key=True, index=True)
+    rev = Column(Integer,nullable=False, unique=True, index=True)
+    date = Column(String(255), nullable=False,index=True)
+    os = Column(Integer, nullable=False,index=True)
+    status = Column(String(255), nullable=False)
+    totalsheets = Column(Integer, nullable=False)
 
-class Sheet(db.model):
+    #sheets = relationship('Sheet',back_populates='owner_rev')
+
+    owner_document_id = Column(Integer,ForeignKey('documents.id'))
+
+    owner = relationship('Document',back_populates='revs')
+
+class Sheet(Base):
     '''
+    ## Tabla de Hojas
     Cuando se genera un master, puede afectarse la/s hoja/s de un documento *CNEA*.\n
     \n
     |   Name      |   Type    |   Description                              |
@@ -67,16 +74,21 @@ class Sheet(db.model):
     | owner       |  Key      | Clave vinculada a la tabla de revisiones   |
  
     '''
-    id = db.Column(db.Integer(), primary_key=True)
-    sheetnum = db.Column(db.Integer(), nullable=False, unique=True)
-    format = db.Column(db.String(255), nullable=False)
-    ric = db.relationship('Ric',backref='owned_sheet', lazy=True)
-    notes = db.relationship('Note',backref='owned_sheet', lazy=True)
-    owner = db.Column(db.Integer(),db.ForeingKey('rev.id'))
+    __tablename__ = "sheets"
+    id = Column(Integer, primary_key=True)
+    sheetnum = Column(Integer, nullable=False, unique=True)
+    format = Column(String(255), nullable=False)
+
+    #rics = relationship('Ric',back_populates='owned_sheet', lazy=True)
+
+    #notes = relationship('Note',back_populates='owner_sheet', lazy=True)
+
+    #owner_rev = Column(Integer(),ForeignKey('revs.id'))
 
 
-class Ric(db.model):
+class Ric(Base):
     '''
+    ## Tabla de revisiones Interna de Cambios
     Las Revisiones Internas de Cambios o Master son generadas por documentos de cambio.\n
     \n
     |   Name      |   Type    |   Description                              |
@@ -87,14 +99,17 @@ class Ric(db.model):
     | owner       |  Key      | Clave vinculada a la tabla de sheets       |
  
     '''
-    id = db.Column(db.Integer(), primary_key=True)
-    rev = db.Column(db.String(255), nullable=False, unique=True)
-    date = db.Column(db.String(255), nullable=False, unique=True)
-    notelist = db.Column(db.String(255), nullable=False, unique=True)
-    owner = db.Column(db.Integer(),db.ForeingKey('sheet.id'))
+    __tablename__ = "rics"
+    id = Column(Integer, primary_key=True)
+    rev = Column(String(255), nullable=False, unique=True)
+    date = Column(String(255), nullable=False, unique=True)
+    notelist = Column(String(255), nullable=False, unique=True)
 
-class Note(db.model):
+    #owner_sheet = Column(Integer,ForeignKey('sheets.id'))
+
+class Note(Base):
     '''
+    ## Tabla de Notas
     Detalle de la nota que afecta el documento, se categorizan en tres tipos \n
     de documentos Notificacion de Cambio en Obra (NCO), Aclaracion Tecnica(AT) y\n
     Solicitud de Cambio en Obra (SCO).\n
@@ -109,10 +124,13 @@ class Note(db.model):
     | owner       |   X   |   X   |   X   |  Key      | Clave vinculada a la tabla de sheets       |
 
     '''
-    id = db.Column(db.Integer(), primary_key=True)
-    notenum = db.Column(db.Integer(), nullable=False, unique=True)
-    docnum = db.Column(db.String(255), nullable=False, unique=True)
-    rev = db.Column(db.Integer(), nullable=False, unique=True)
-    verify = db.Column(db.String(255), nullable=False, unique=True)
-    status = db.Column(db.String(255), nullable=False, unique=True)
-    owner = db.Column(db.Integer(),db.ForeingKey('sheet.id'))
+    __tablename__ = "notes"
+    id = Column(Integer, primary_key=True)
+    notenum = Column(Integer, nullable=False, unique=True)
+    docnum = Column(String(255), nullable=False, unique=True)
+    rev = Column(Integer, nullable=False, unique=True)
+    verify = Column(String(255), nullable=False, unique=True)
+    status = Column(String(255), nullable=False, unique=True)
+
+    #owner_sheet = Column(Integer,ForeignKey('sheets.id'))
+

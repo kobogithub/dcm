@@ -57,14 +57,32 @@ Interactuando con la base de datos en SQLAlchemy.
 
 ### Dependencias
 
-- Flask
+- FastAPI
 - Bulma
-- Flask-SQLAlchemy
-- Python +3.8 
+- SQLAlchemy
+- Pydantic
+- Python-multipart
+- Python +3.9
 
 ### Estructura del proyecto
 
 ![Estructura](assets/structure.jpg)
+
+## Instalacion
+
+Solo se necesita tener instalado [Python 3.9](https://www.python.org/downloads/release/python-390/) y pipenv con pip:
+
+`pip install pipenv`
+
+Instalar el entorno y deploy:
+
+`pipenv install`
+
+El siguiente comando esta establecido en script de Pipfile:
+
+`pipenv run dev`
+
+Server : [LocaHost:8000](http://localhost:8000)
 
 ## Desarrollo y Etapas
 
