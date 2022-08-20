@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.mod_cp import crud, models, schemas
 from app.db.database import SessionLocal, engine
 
-models.Base.metadata.drop_all(bind=engine)
+#models.Base.metadata.drop_all(bind=engine)
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -40,4 +40,9 @@ def read_document(docnum: str, db: Session = Depends(get_db)):
         #raise HTTPException(status_code=404, detail="User not found")
     return db_document
 
-
+@app.post("/documents/{document_id}/revs/", response_model=schemas.Rev)
+def create_rev(document_id: int, rev: schemas.CreateRev, db: Session = Depends(get_db)):
+    db_rev = crud.create_rev(db, rev=rev ,document_id=document_id)
+    #if db_user is None:
+        #raise HTTPException(status_code=404, detail="
+    return db_rev

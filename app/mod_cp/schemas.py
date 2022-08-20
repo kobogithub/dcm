@@ -41,16 +41,19 @@ class Sheet(SheetBase):
     class Config:
         orm_mode = True
 class RevBase(BaseModel):
-    rev: str
+    rev: int
     date: datetime
     os: int
     status: str
     totalsheets: int
     #sheets: list[Sheet] = []
 
+class CreateRev(RevBase):
+    pass
+
 class Rev(RevBase):
     id: int
-    owner_document: int
+    owner_document_id: int
 
     class Config:
         orm_mode = True
@@ -61,12 +64,12 @@ class DocumentBase(BaseModel):
     docqbnet: Optional[str]
     title: str
     section: str
-    #revs: list[Rev] = []
 
 class CreateDocument(DocumentBase):
     pass
 class Document(DocumentBase):
     id: int
+    revs: list[Rev] = []
 
     class Config:
         orm_mode = True

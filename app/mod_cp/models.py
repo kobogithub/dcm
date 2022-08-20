@@ -29,7 +29,7 @@ class Document(Base):
     title = Column(String(255), nullable=False)
     section = Column(String(255), nullable=False)
 
-   # revs = relationship('Rev',back_populates='owner_document')
+    revs = relationship('Rev',back_populates='owner')
     
 class Rev(Base):
     '''
@@ -49,14 +49,16 @@ class Rev(Base):
     __tablename__ = "revs"
     id = Column(Integer, primary_key=True, index=True)
     rev = Column(Integer,nullable=False, unique=True, index=True)
-    date = Column(String(255), nullable=False, unique=True,index=True)
-    os = Column(Integer, nullable=False, unique=True,index=True)
-    status = Column(String(255), nullable=False, unique=True)
-    totalsheets = Column(Integer, nullable=False, unique=True)
+    date = Column(String(255), nullable=False,index=True)
+    os = Column(Integer, nullable=False,index=True)
+    status = Column(String(255), nullable=False)
+    totalsheets = Column(Integer, nullable=False)
 
     #sheets = relationship('Sheet',back_populates='owner_rev')
 
-    #owner_document = Column(Integer,ForeignKey('documents.id'))
+    owner_document_id = Column(Integer,ForeignKey('documents.id'))
+
+    owner = relationship('Document',back_populates='revs')
 
 class Sheet(Base):
     '''
