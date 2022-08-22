@@ -8,45 +8,48 @@ class NoteBase(BaseModel):
     rev: int
     status: str
     verify: str
+    sheets: str
 
+class CreateNote(NoteBase):
+    pass
 
 class Note(NoteBase):
     id: int
-    owner_sheet: int
+    owner_ric_id: int
 
     class Config:
         orm_mode = True
 
-class RicBase(BaseModel):
-    date: datetime
-    notelist: list[str]
+#class RicBase(BaseModel):
+    #date: datetime
+    #notelist: list[str]
 
+#class Ric(RicBase):
+    #id: int
+    #owner_sheet: int
+
+    #class Config:
+        #orm_mode = True
+class RicBase(BaseModel):
+    id: int
+    rev: str
+    date: datetime
+    status: str
+class CreateRic(RicBase):
+    pass
 class Ric(RicBase):
     id: int
-    owner_sheet: int
-
+    owner_rev_id : int
+    notes: list[Note] = []
     class Config:
         orm_mode = True
-class SheetBase(BaseModel):
-    id: int
-    sheetnum: int
-    format: str
-    #rics: list[Ric] = []
-    #notes: list[Note] = []
 
-class Sheet(SheetBase):
-    id: int
-    owner_rev: int
-
-    class Config:
-        orm_mode = True
 class RevBase(BaseModel):
     rev: int
     date: datetime
     os: int
     status: str
     totalsheets: int
-    #sheets: list[Sheet] = []
 
 class CreateRev(RevBase):
     pass
@@ -54,6 +57,7 @@ class CreateRev(RevBase):
 class Rev(RevBase):
     id: int
     owner_document_id: int
+    rics: list[Ric] = []
 
     class Config:
         orm_mode = True

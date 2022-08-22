@@ -29,7 +29,7 @@ class Document(Base):
     title = Column(String(255), nullable=False)
     section = Column(String(255), nullable=False)
 
-    revs = relationship('Rev',back_populates='owner')
+    revs = relationship('Rev',back_populates='owner_document')
     
 class Rev(Base):
     '''
@@ -47,6 +47,7 @@ class Rev(Base):
     | owner       |     X     |   X   |  Key      | Clave vinculada a la tabla de documento    |
     '''
     __tablename__ = "revs"
+
     id = Column(Integer, primary_key=True, index=True)
     rev = Column(Integer,nullable=False, unique=True, index=True)
     date = Column(String(255), nullable=False,index=True)
@@ -54,13 +55,13 @@ class Rev(Base):
     status = Column(String(255), nullable=False)
     totalsheets = Column(Integer, nullable=False)
 
-    #sheets = relationship('Sheet',back_populates='owner_rev')
+    rics = relationship('Ric',back_populates='owner_rev')
 
     owner_document_id = Column(Integer,ForeignKey('documents.id'))
 
-    owner = relationship('Document',back_populates='revs')
+    owner_document = relationship('Document',back_populates='revs')
 
-class Sheet(Base):
+class Ric(Base):
     '''
     ## Tabla de Hojas
     Cuando se genera un master, puede afectarse la/s hoja/s de un documento *CNEA*.\n
@@ -74,38 +75,39 @@ class Sheet(Base):
     | owner       |  Key      | Clave vinculada a la tabla de revisiones   |
  
     '''
-    __tablename__ = "sheets"
-    id = Column(Integer, primary_key=True)
-    sheetnum = Column(Integer, nullable=False, unique=True)
-    format = Column(String(255), nullable=False)
-
-    #rics = relationship('Ric',back_populates='owned_sheet', lazy=True)
-
-    #notes = relationship('Note',back_populates='owner_sheet', lazy=True)
-
-    #owner_rev = Column(Integer(),ForeignKey('revs.id'))
-
-
-class Ric(Base):
-    '''
-    ## Tabla de revisiones Interna de Cambios
-    Las Revisiones Internas de Cambios o Master son generadas por documentos de cambio.\n
-    \n
-    |   Name      |   Type    |   Description                              |
-    | ----------- | --------- | ------------------------------------------ |
-    | rev         |  Integer  | Revision del Master                        |
-    | date        |  String   | Fecha de Liberacion del Master             |
-    | notelist    |  Array    | Lista de Notas Vinculadas                  |
-    | owner       |  Key      | Clave vinculada a la tabla de sheets       |
- 
-    '''
     __tablename__ = "rics"
-    id = Column(Integer, primary_key=True)
-    rev = Column(String(255), nullable=False, unique=True)
-    date = Column(String(255), nullable=False, unique=True)
-    notelist = Column(String(255), nullable=False, unique=True)
 
-    #owner_sheet = Column(Integer,ForeignKey('sheets.id'))
+    id = Column(Integer, primary_key=True)
+    rev = Column(String(255), nullable=False)
+    date = Column(String(255), nullable=False)
+
+    owner_rev = relationship('Rev',back_populates='rics')
+
+    notes = relationship('Note',back_populates='owner_ric', lazy=True)
+
+    owner_rev_id = Column(Integer(),ForeignKey('revs.id'))
+
+
+#class Ric(Base):
+    #'''
+    ### Tabla de revisiones Interna de Cambios
+    #Las Revisiones Internas de Cambios o Master son generadas por documentos de cambio.\n
+    #\n
+    #|   Name      |   Type    |   Description                              |
+    #| ----------- | --------- | ------------------------------------------ |
+    #| rev         |  Integer  | Revision del Master                        |
+    #| date        |  String   | Fecha de Liberacion del Master             |
+    #| notelist    |  Array    | Lista de Notas Vinculadas                  |
+    #| owner       |  Key      | Clave vinculada a la tabla de sheets       |
+ 
+    #'''
+    #__tablename__ = "rics"
+    #id = Column(Integer, primary_key=True)
+    #rev = Column(String(255), nullable=False, unique=True)
+    #date = Column(String(255), nullable=False, unique=True)
+    #notelist = Column(String(255), nullable=False, unique=True)
+
+    ##owner_sheet = Column(Integer,ForeignKey('sheets.id'))
 
 class Note(Base):
     '''
@@ -125,12 +127,16 @@ class Note(Base):
 
     '''
     __tablename__ = "notes"
-    id = Column(Integer, primary_key=True)
-    notenum = Column(Integer, nullable=False, unique=True)
-    docnum = Column(String(255), nullable=False, unique=True)
-    rev = Column(Integer, nullable=False, unique=True)
-    verify = Column(String(255), nullable=False, unique=True)
-    status = Column(String(255), nullable=False, unique=True)
 
-    #owner_sheet = Column(Integer,ForeignKey('sheets.id'))
+    id = Column(Integer, primary_key=True)
+    notenum = Column(Integer, nullable=False)
+    docnum = Column(String(255), nullable=False)
+    rev = Column(Integer, nullable=False)
+    verify = Column(String(255), nullable=False)
+    status = Column(String(255), nullable=False)
+    sheets = Column(String)
+
+    owner_ric_id = Column(Integer, ForeignKey('rics.id'))
+
+    owner_ric = relationship('Ric',back_populates='notes')
 

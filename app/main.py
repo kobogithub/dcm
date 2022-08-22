@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-#models.Base.metadata.drop_all(bind=engine)
+models.Base.metadata.drop_all(bind=engine)
 models.Base.metadata.create_all(bind=engine)
 
 tag_metadata = [
@@ -73,3 +73,6 @@ def create_rev(document_id: int, rev: schemas.CreateRev, db: Session = Depends(g
     #if db_user is None:
         #raise HTTPException(status_code=404, detail="
     return db_rev
+
+@app.post("/revs/{rev_id}/sheets/", responde_model=schemas.Sheet, tags=['revs'])
+def create_sheet()
