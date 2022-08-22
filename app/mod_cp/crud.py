@@ -25,3 +25,13 @@ def create_rev(db: Session, rev: schemas.Rev , document_id: int ):
     db.commit()
     db.refresh(db_rev)
     return db_rev
+
+def create_note(db: Session, note: schemas.Note, rev_id: int):
+    db_notes = db
+
+def create_ric(db:Session, ric : schemas.Ric , rev_id: int):
+    db_ric = models.Ric(**ric.dict(), owner_rev_id= rev_id)
+    db.add(db_ric)
+    db.commit()
+    db.refresh(db_ric)
+    return db_ric

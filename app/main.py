@@ -74,5 +74,7 @@ def create_rev(document_id: int, rev: schemas.CreateRev, db: Session = Depends(g
         #raise HTTPException(status_code=404, detail="
     return db_rev
 
-@app.post("/revs/{rev_id}/sheets/", responde_model=schemas.Sheet, tags=['revs'])
-def create_sheet()
+@app.post("/revs/{rev_id}/rics/", response_model=schemas.Ric, tags=['revs'])
+def create_ric(rev_id: int, ric: schemas.CreateRic, db: Session = Depends(get_db)):
+    db_ric = crud.create_ric(db, ric=ric, rev_id= rev_id)
+    return db_ric

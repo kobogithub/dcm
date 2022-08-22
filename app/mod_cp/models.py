@@ -77,9 +77,10 @@ class Ric(Base):
     '''
     __tablename__ = "rics"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
     rev = Column(String(255), nullable=False)
     date = Column(String(255), nullable=False)
+    status= Column(String(50),nullable=False)
 
     owner_rev = relationship('Rev',back_populates='rics')
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "85a11d37f6b33045f7b22b5f1984fb4cd9ebe5f9abbd2f0b607f44476e9e9d1f"
+            "sha256": "97e9dbeffe4581ad4086cf0a87d237c7f992e245e898a94213fa01e1257f8b22"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -369,6 +369,22 @@
             "index": "pypi",
             "version": "==1.4.40"
         },
+        "sqlalchemy2-stubs": {
+            "hashes": [
+                "sha256:2fbfddfee7fc6b45206dc52e9fe9d91a787efb6af13191debe84dda9b4798abd",
+                "sha256:9104894cee3159906079c4a31c2a66fbedfc72a381c51dfd1d8ebae8ffd7f2ca"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==0.0.2a25"
+        },
+        "sqlmodel": {
+            "hashes": [
+                "sha256:3b4f966b9671b24d85529d274e6c4dbc7753b468e35d2d6a40bd75cad1f66813",
+                "sha256:c5fd8719e09da348cd32ce2a5b6a44f289d3029fa8f1c9818229b6f34f1201b4"
+            ],
+            "index": "pypi",
+            "version": "==0.0.6"
+        },
         "starlette": {
             "hashes": [
                 "sha256:5a60c5c2d051f3a8eb546136aa0c9399773a689595e099e0877704d5888279bf",
@@ -382,7 +398,7 @@
                 "sha256:25642c956049920a5aa49edcdd6ab1e06d7e5d467fc00e0506c44ac86fbfca02",
                 "sha256:e6d2677a32f47fc7eb2795db1dd15c1f34eff616bcaf2cfb5e997f854fa1c4a6"
             ],
-            "markers": "python_version >= '3.7'",
+            "markers": "python_version < '3.10'",
             "version": "==4.3.0"
         },
         "uvicorn": {

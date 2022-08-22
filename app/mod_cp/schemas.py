@@ -31,16 +31,17 @@ class Note(NoteBase):
     #class Config:
         #orm_mode = True
 class RicBase(BaseModel):
-    id: int
     rev: str
     date: datetime
     status: str
+    notes: list[CreateNote]
+
+class RicAddNote
 class CreateRic(RicBase):
     pass
 class Ric(RicBase):
     id: int
     owner_rev_id : int
-    notes: list[Note] = []
     class Config:
         orm_mode = True
 
