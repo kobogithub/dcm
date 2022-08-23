@@ -3,11 +3,15 @@ from sqlalchemy.orm import Session
 from app.mod_cp import models, schemas
 
 # Devuelve un documento por numero de documento
-def get_document(db: Session, docnum: str) -> schemas.Document:
+def get_document(
+    db: Session, docnum: str
+    ) -> schemas.Document:
     return db.query(models.Document).filter(models.Document.docnum == docnum).first()
     
 # Crear un documento nuevo  
-def create_document(db: Session, document: schemas.Document):
+def create_document(
+    db: Session, document: schemas.Document
+    ) -> schemas.Document:
     db_document = models.Document(**document.dict())
     db.add(db_document)
     db.commit()
@@ -15,11 +19,15 @@ def create_document(db: Session, document: schemas.Document):
     return db_document
 
 # Devuelve todos los documentos
-def get_documents(db: Session, skip: int = 0, limit: int = 100):
+def get_documents(
+    db: Session, skip: int = 0, limit: int = 100
+    ) -> list[schemas.Document]:
     return db.query(models.Document).offset(skip).limit(limit).all()
 
 # Crea una revision nueva
-def create_rev(db: Session, rev: schemas.Rev , document_id: int ):
+def create_rev(
+    db: Session, rev: schemas.Rev , document_id: int 
+    ) -> schemas.Rev:
     db_rev = models.Rev(**rev.dict(), owner_document_id=document_id)
     db.add(db_rev)
     db.commit()
@@ -29,7 +37,9 @@ def create_rev(db: Session, rev: schemas.Rev , document_id: int ):
 def create_note(db: Session, note: schemas.Note, rev_id: int):
     db_notes = db
 
-def create_ric(db:Session, ric : schemas.Ric , rev_id: int):
+def create_ric(
+    db:Session, ric : schemas.Ric , rev_id: int
+    ) -> schemas.Ric:
     db_ric = models.Ric(**ric.dict(), owner_rev_id= rev_id)
     db.add(db_ric)
     db.commit()

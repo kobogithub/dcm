@@ -42,12 +42,20 @@ def get_db():
         db.close()
 
 @app.get("/", response_class=HTMLResponse)
-def home(request: Request,skip: int = 0, limit: int = 100,db: Session = Depends(get_db)):
+def home(
+    request: Request,
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db)
+    ) -> HTMLResponse:
     documents = crud.get_documents(db, skip=skip, limit=limit)
     return templates.TemplateResponse('home.html',{'request': request, 'documents': documents})
 
 @app.post("/documents/", response_model=schemas.Document, tags=['documents'])
-def create_document(document: schemas.CreateDocument, db: Session = Depends(get_db)):
+def create_document(
+    document: schemas.CreateDocument,
+    db: Session = Depends(get_db)
+    ) -> schemas.Document:
     #db_user = crud.get_user_by_email(db, email=user.email)
     #if db_user:
         #raise HTTPException(status_code=400, detail="Email already registered")
@@ -55,26 +63,41 @@ def create_document(document: schemas.CreateDocument, db: Session = Depends(get_
 
 
 @app.get("/documents/", response_model=list[schemas.Document], tags=['documents'])
-def read_documents(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_documents(
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db)
+    ) -> list[schemas.Document]:
     documents = crud.get_documents(db, skip=skip, limit=limit)
     return documents
 
 
 @app.get("/documents/{docnum}", response_model=schemas.Document, tags=['documents'])
-def read_document(docnum: str, db: Session = Depends(get_db)):
+def read_document(
+    docnum: str,
+    db: Session = Depends(get_db)
+    ) -> schemas.Document:
     db_document = crud.get_document(db, docnum=docnum)
     #if db_user is None:
         #raise HTTPException(status_code=404, detail="User not found")
     return db_document
 
 @app.post("/documents/{document_id}/revs/", response_model=schemas.Rev, tags=['revs'])
-def create_rev(document_id: int, rev: schemas.CreateRev, db: Session = Depends(get_db)):
+def create_rev(
+    document_id: int,
+    rev: schemas.CreateRev,
+    db: Session = Depends(get_db)
+    ) -> schemas.Rev:
     db_rev = crud.create_rev(db, rev=rev ,document_id=document_id)
     #if db_user is None:
         #raise HTTPException(status_code=404, detail="
     return db_rev
 
 @app.post("/revs/{rev_id}/rics/", response_model=schemas.Ric, tags=['revs'])
-def create_ric(rev_id: int, ric: schemas.CreateRic, db: Session = Depends(get_db)):
+def create_ric(
+    rev_id: int,
+    ric: schemas.CreateRic,
+    db: Session = Depends(get_db)
+    ) -> schemas.Ric:
     db_ric = crud.create_ric(db, ric=ric, rev_id= rev_id)
     return db_ric
