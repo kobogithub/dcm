@@ -36,7 +36,7 @@ class RicBase(BaseModel):
     status: str
     notes: list[CreateNote]
 
-class RicAddNote
+#class RicAddNote
 class CreateRic(RicBase):
     pass
 class Ric(RicBase):
