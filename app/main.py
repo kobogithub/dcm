@@ -1,10 +1,10 @@
 from fastapi import Depends, FastAPI, HTTPException, Request
 from sqlalchemy.orm import Session
-from app.mod_cp import crud, models, schemas
-from app.db.database import SessionLocal, engine
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from mod_cp import *
+from db import *
 
 models.Base.metadata.drop_all(bind=engine)
 models.Base.metadata.create_all(bind=engine)
